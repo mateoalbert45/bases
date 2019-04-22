@@ -1,0 +1,62 @@
+1.2 no anda ni ahi pero es lo unico que se me ocurrio xd
+select distinct d.id_departamento
+from departamento d join empleado e on (d.id_departamento = e.id_departamento)
+                    join tarea t on (e.id_tarea = t.id_tarea)
+where t.sueldo_maximo - t.sueldo_minimo > 30*t.sueldo_maximo/100
+limit 101
+
+1.3 
+select count ( distnct p.codigo_pelicula) as "total de peliculas"
+from pelicula p join renglon_entrega re on (p.codigo_pelicula= re.codigo_pelicula)
+                join entrega e on (re.nro_entrega = e.nro_entrega)
+                join distribuidor d on (e.id_distribuidor = d.id_distribuidor)
+where extract(year from e.fecha_entrega) = 2006 and d.tipo = 'N'
+
+1.4
+select count( distinct  p.codigo_pelicula) as hola
+from pelicula p join renglon_entrega re on (p.codigo_pelicula= re.codigo_pelicula)
+                join entrega e on (re.nro_entrega = e.nro_entrega)
+                join distribuidor d on (e.id_distribuidor = d.id_distribuidor)
+where d.tipo != 'I'
+
+1.5 en departamento la clave primaria esta compuesta por dos columnas
+select e.id_empleado
+from empleado e join departamento d on (e.id_empleado = d.jefe_departamento)
+                join ciudad c on (d.id_ciudad = c.id_ciudad)
+                join pais p on (c.id_pais = p.id_pais)
+where e.id_jefe is null and p.nombre_pais = 'ARGENTINA'
+
+1.6
+select e.id_empleado,e.apellido, e.nombre, e.id_departamento
+from empleado e join departamento d on (e.id_departamento = d.id_departamento and e.id_distribuidor = d.id_distribuidor)
+                join ciudad c on (d.id_ciudad = c.id_ciudad)
+                join pais p on (c.id_pais = p.id_pais)
+where  p.nombre_pais = 'ARGENTINA' and d.jefe_departamento IN(select  e.id_empleado 
+                                         from departamento d  join empleado e on(e.id_empleado = d.jefe_departamento)
+where e.porc_comision > 10
+)
+
+1.7 no hay peliculas en la base en los ultimos 5 años xdd
+select distinct p.codigo_pelicula, p.genero
+from pelicula p join renglon_entrega re on (p.codigo_pelicula= re.codigo_pelicula)
+                join entrega e on (re.nro_entrega = e.nro_entrega)
+where extract(year from e.fecha_entrega) >= 2009 
+order by p.genero
+
+1.8
+select re.nro_entrega, count(re.nro_entrega) as "cantidad de entregas", d.nombre ,e.fecha_entrega
+from renglon_entrega re join entrega e on(re.nro_entrega = e.nro_entrega)
+                        join distribuidor d on(e.id_distribuidor = d.id_distribuidor)  
+group by re.nro_entrega,d.nombre,e.fecha_entrega
+order by e.fecha_entrega
+limit 1000
+
+1.9
+select c.nombre_ciudad, count(e.id_empleado) as "cantidad"
+from ciudad c join departamento d on(c.id_ciudad = d.id_ciudad)
+              join empleado e on(d.id_departamento = e.id_departamento and d.id_distribuidor = e.id_distribuidor)
+group by c.nombre_ciudad HAVING count(e.id_empleado) > 30
+order by cantidad
+limit 1000
+
+
