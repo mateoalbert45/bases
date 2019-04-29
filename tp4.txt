@@ -26,8 +26,9 @@ from pelicula p join renglon_entrega re on (p.codigo_pelicula= re.codigo_pelicul
                 join entrega e on (re.nro_entrega = e.nro_entrega)
                 join distribuidor d on (e.id_distribuidor = d.id_distribuidor)
 where d.tipo = 'N'
-and e.nro_entrega not in (select nro_entrega from entrega join distribuidor d1 on (e.id_distribuidor = d.id_distribuidor)
-where d1.tipo = 'I'
+and e.nro_entrega not in (select nro_entrega from entrega e join distribuidor d1 on (e.id_distribuidor = d1.id_distribuidor)
+where d1.tipo = 'I')
+limit 100
 
 1.5 en departamento la clave primaria esta compuesta por dos columnas
 select e.id_empleado
