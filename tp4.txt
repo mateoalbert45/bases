@@ -19,6 +19,16 @@ from pelicula p join renglon_entrega re on (p.codigo_pelicula= re.codigo_pelicul
                 join distribuidor d on (e.id_distribuidor = d.id_distribuidor)
 where d.tipo != 'I'
 
+
+1.4 bien hecho xd
+select count( distinct  p.codigo_pelicula) as hola
+from pelicula p join renglon_entrega re on (p.codigo_pelicula= re.codigo_pelicula)
+                join entrega e on (re.nro_entrega = e.nro_entrega)
+                join distribuidor d on (e.id_distribuidor = d.id_distribuidor)
+where d.tipo = 'N'
+and e.nro_entrega not in (select nro_entrega from entrega join distribuidor d1 on (e.id_distribuidor = d.id_distribuidor)
+where d1.tipo = 'I'
+
 1.5 en departamento la clave primaria esta compuesta por dos columnas
 select e.id_empleado
 from empleado e join departamento d on (e.id_empleado = d.jefe_departamento)
@@ -36,7 +46,7 @@ where  p.nombre_pais = 'ARGENTINA' and d.jefe_departamento IN(select  e.id_emple
 where e.porc_comision > 10
 )
 
-1.7 no hay peliculas en la base en los ultimos 5 años xdd
+1.7 no hay peliculas en la base en los ultimos 5 aÃ±os xdd
 select distinct p.codigo_pelicula, p.genero
 from pelicula p join renglon_entrega re on (p.codigo_pelicula= re.codigo_pelicula)
                 join entrega e on (re.nro_entrega = e.nro_entrega)
