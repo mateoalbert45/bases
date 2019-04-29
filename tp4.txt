@@ -1,9 +1,13 @@
-1.2 no anda ni ahi pero es lo unico que se me ocurrio xd
-select distinct d.id_departamento
-from departamento d join empleado e on (d.id_departamento = e.id_departamento)
-                    join tarea t on (e.id_tarea = t.id_tarea)
-where t.sueldo_maximo - t.sueldo_minimo > 30*t.sueldo_maximo/100
-limit 101
+1.2
+select * from departamento D
+where NOT exists(
+                                 select distinct d.id_departamento, e.id_empleado
+                                 from departamento d1 join empleado e on (d1.id_departamento = e.id_departamento and d1.id_distribuidor = e.id_distribuidor)
+                                 join tarea t on (e.id_tarea = t.id_tarea)
+                                 where t.sueldo_maximo - t.sueldo_minimo < (select (t.sueldo_maximo/100)*30) and 
+                                 d1.id_distribuidor = d.id_distribuidor and d1.id_departamento = d.id_departamento
+                                 )
+limit 1000
 
 1.3 
 select count ( distnct p.codigo_pelicula) as "total de peliculas"
