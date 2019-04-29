@@ -69,4 +69,25 @@ group by c.nombre_ciudad HAVING count(e.id_empleado) > 30
 order by cantidad
 limit 1000
 
+2.1
+select distinct i.id_institucion, i.nombre_institucion, v.nro_voluntario, v.horas_aportadas
+from institucion i join voluntario v on(i.id_institucion = v.id_institucion)
+where v.horas_aportadas is not null
+order by i.nombre_institucion
+2.2
+select count(v.id_coordinador) as "numero de coordinadores", c.nombre_continente, p.nombre_pais
+from continente c join pais p on(c.id_continente = p.id_continente)
+                  join direccion d on (p.id_pais = d.id_pais)
+                  join institucion i on(d.id_direccion = i.id_direccion)
+                  join voluntario v on (i.id_institucion = v.id_institucion)
+group by c.nombre_continente, p.nombre_pais
+2.3
+select v.nombre, v.apellido, v.fecha_nacimiento, i.id_institucion
+from voluntario v join institucion i on(v.id_institucion = i.id_institucion)
+where i.id_institucion = 80 and v.apellido <> 'Zlotkey'
+2.4
+select nro_voluntario,apellido, horas_aportadas
+from voluntario
+where horas_aportadas > (select AVG(horas_aportadas) from voluntario)
+order by horas_aportadas ASC
 
