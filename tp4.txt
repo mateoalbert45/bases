@@ -8,6 +8,12 @@ where NOT exists(
                                  d1.id_distribuidor = d.id_distribuidor and d1.id_departamento = d.id_departamento
                                  )
 limit 1000
+1.2 2
+select *
+from departamento d
+where d.id_departamento not in(select e.id_departamento
+from empleado e join tarea t on (e.id_tarea = t.id_tarea)
+where (sueldo_maximo - sueldo_minimo) < 0.30 * sueldo_maximo)
 
 1.3 
 select count ( distnct p.codigo_pelicula) as "total de peliculas"
