@@ -3,3 +3,12 @@ anda a la referencia de la tabla que queres borrar y donde dice delete contraint
 
 2
 c) la respuesta correcta es 'v'
+
+4
+para saber si esta bien tenes que fijarte como esta escrito, por ejemplo:
+ALTER TABLE Equipo 
+ADD CONSTRAINT FK_Equipo_Auto (id_equipo, contacto) 
+REFERENCES Auto (id_equipo, conductor);
+esta mal porque hace referencia(,"REFERENCES Auto (id_equipo, conductor)",) a un atributo que no es la clave primaria, el de arriba(,"ADD CONSTRAINT FK_Equipo_Auto (id_equipo, contacto) ",)
+puede ser cualquier tipo de atributo
+y tambien hay que decir que el tipo de contraint es fk 
