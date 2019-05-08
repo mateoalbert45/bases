@@ -1,3 +1,10 @@
+1.1 faltaba este uwu
+select e.id_video, e.fecha_entrega, e.nro_entrega, p.idioma
+from entrega e join renglon_entrega re on(e.nro_entrega = re.nro_entrega)
+join pelicula p on (re.codigo_pelicula = p.codigo_pelicula)
+where p.idioma = 'Inglés' and extract(year from e.fecha_entrega) = 2006
+limit 100
+
 1.2 
 select * from departamento D
 where NOT exists(
@@ -43,7 +50,7 @@ where  p.nombre_pais = 'ARGENTINA' and d.jefe_departamento IN(select  e.id_emple
 where e.porc_comision > 10
 )
 
-1.7 no hay peliculas en la base en los ultimos 5 a�os xdd
+1.7 no hay peliculas en la base en los ultimos 5 años xdd
 select distinct p.codigo_pelicula, p.genero
 from pelicula p join renglon_entrega re on (p.codigo_pelicula= re.codigo_pelicula)
                 join entrega e on (re.nro_entrega = e.nro_entrega)
