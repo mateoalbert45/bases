@@ -1,4 +1,4 @@
-1.2
+1.2 
 select * from departamento D
 where NOT exists(
                                  select distinct d.id_departamento, e.id_empleado
@@ -8,12 +8,6 @@ where NOT exists(
                                  d1.id_distribuidor = d.id_distribuidor and d1.id_departamento = d.id_departamento
                                  )
 limit 1000
-1.2 2
-select *
-from departamento d
-where d.id_departamento not in(select e.id_departamento
-from empleado e join tarea t on (e.id_tarea = t.id_tarea)
-where (sueldo_maximo - sueldo_minimo) < 0.30 * sueldo_maximo)
 
 1.3 
 select count ( distnct p.codigo_pelicula) as "total de peliculas"
@@ -23,14 +17,6 @@ from pelicula p join renglon_entrega re on (p.codigo_pelicula= re.codigo_pelicul
 where extract(year from e.fecha_entrega) = 2006 and d.tipo = 'N'
 
 1.4
-select count( distinct  p.codigo_pelicula) as hola
-from pelicula p join renglon_entrega re on (p.codigo_pelicula= re.codigo_pelicula)
-                join entrega e on (re.nro_entrega = e.nro_entrega)
-                join distribuidor d on (e.id_distribuidor = d.id_distribuidor)
-where d.tipo != 'I'
-
-
-1.4 bien hecho xd
 select count( distinct  p.codigo_pelicula) as hola
 from pelicula p join renglon_entrega re on (p.codigo_pelicula= re.codigo_pelicula)
                 join entrega e on (re.nro_entrega = e.nro_entrega)
@@ -57,7 +43,7 @@ where  p.nombre_pais = 'ARGENTINA' and d.jefe_departamento IN(select  e.id_emple
 where e.porc_comision > 10
 )
 
-1.7 no hay peliculas en la base en los ultimos 5 aÃ±os xdd
+1.7 no hay peliculas en la base en los ultimos 5 años xdd
 select distinct p.codigo_pelicula, p.genero
 from pelicula p join renglon_entrega re on (p.codigo_pelicula= re.codigo_pelicula)
                 join entrega e on (re.nro_entrega = e.nro_entrega)
@@ -80,25 +66,42 @@ group by c.nombre_ciudad HAVING count(e.id_empleado) > 30
 order by cantidad
 limit 1000
 
+
 2.1
-select distinct i.id_institucion, i.nombre_institucion, v.nro_voluntario, v.horas_aportadas
-from institucion i join voluntario v on(i.id_institucion = v.id_institucion)
-where v.horas_aportadas is not null
-order by i.nombre_institucion
+select i.nombre_institucion, count(v.nro_voluntario)
+from voluntario v  join institucion i  on(i.id_institucion = v.id_institucion)
+group by i.id_institucion, i.nombre_institucion
+order by count(v.nro_voluntario)
+
 2.2
-select count(v.id_coordinador) as "numero de coordinadores", c.nombre_continente, p.nombre_pais
-from continente c join pais p on(c.id_continente = p.id_continente)
-                  join direccion d on (p.id_pais = d.id_pais)
-                  join institucion i on(d.id_direccion = i.id_direccion)
-                  join voluntario v on (i.id_institucion = v.id_institucion)
+select c.nombre_continente,p.nombre_pais, count(v.nro_voluntario)
+from continente c  join pais p on(c.id_continente = p.id_continente)
+                   join direccion d on(p.id_pais = d.id_pais)
+                   join institucion i on(d.id_direccion = i.id_direccion )
+                   join voluntario v on(i.id_institucion = v.id_institucion)
+where id_coordinador is null
 group by c.nombre_continente, p.nombre_pais
+order by count(v.nro_voluntario)
+
 2.3
-select v.nombre, v.apellido, v.fecha_nacimiento, i.id_institucion
-from voluntario v join institucion i on(v.id_institucion = i.id_institucion)
-where i.id_institucion = 80 and v.apellido <> 'Zlotkey'
+select v.nombre, v.apellido , v.fecha_nacimiento 
+from voluntario v
+where id_institucion = 80 and v.apellido != 'Zlotkey'
+
 2.4
-select nro_voluntario,apellido, horas_aportadas
-from voluntario
+select nro_voluntario, apellido
+from voluntario 
 where horas_aportadas > (select AVG(horas_aportadas) from voluntario)
 order by horas_aportadas ASC
+
+3.2
+para que sea una clave foranea tiene que hacer referencia a otra clave foranea
+para poner una clave foranea nueva en la tabla seria asi
+
+ALTER TABLE distribuidornac
+   ADD   CONSTRAINT Fk_codigo_pais  FOREIGN KEY (codigo_pais)
+                        REFERENCES hola(clavep)  
+;
+
+
 
