@@ -56,6 +56,12 @@ from pelicula p join renglon_entrega re on (p.codigo_pelicula= re.codigo_pelicul
                 join entrega e on (re.nro_entrega = e.nro_entrega)
 where extract(year from e.fecha_entrega) >= 2009 
 order by p.genero
+creo que esta mal el de arriba UWU, dejo como lo hice yo :3
+select p.genero, count(re.nro_entrega)
+from renglon_entrega re join pelicula p on(re.codigo_pelicula = p.codigo_pelicula)
+join entrega e on (re.nro_entrega = e.nro_entrega)
+where extract(year from e.fecha_entrega) > '2006'
+group by p.genero
 
 1.8
 select re.nro_entrega, count(re.nro_entrega) as "cantidad de entregas", d.nombre ,e.fecha_entrega
