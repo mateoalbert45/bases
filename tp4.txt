@@ -1,3 +1,5 @@
+http://www.postgresqltutorial.com/postgresql-alter-table/
+
 1.1 faltaba este uwu
 select e.id_video, e.fecha_entrega, e.nro_entrega, p.idioma
 from entrega e join renglon_entrega re on(e.nro_entrega = re.nro_entrega)
