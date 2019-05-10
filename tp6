@@ -1,3 +1,5 @@
+No se que copie xd pero supongo que me va  servir
+
 alter table contiene add constraint chk_ejemplo
 check_no exits(
 select 1 
