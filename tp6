@@ -9,10 +9,15 @@ having vount (*) > 5))
 
 create or replace function ejemplo_palabrfa () returns trigger as $body$
 begin if(exists( select 1 
-from contiene
+from contiene c
+where c.cod_palabra = new.cod_palabra and c.idioma = new.idioma
 group by cod_palabra, idioma
 having vount (*) > 5)) then
 raise excepcion 'palabra en mas de 5 articulos'
 end if;
 return new;
 end;
+
+
+create trigger nombre
+after insert or update on cientene for each row execute procedure...;
