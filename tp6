@@ -1,5 +1,9 @@
 No se que copie xd pero supongo que me va  servir
 
+
+para hcer una restriccion declarativa tengo que buscar lo que esta mal y poner un not exists
+
+
 alter table contiene add constraint chk_ejemplo
 check_no exits(
 select 1 
@@ -20,4 +24,4 @@ end;
 
 
 create trigger nombre
-after insert or update on cientene for each row execute procedure...;
+after insert or update on contiene for each row execute procedure...;
