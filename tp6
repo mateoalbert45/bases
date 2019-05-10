@@ -1,0 +1,16 @@
+alter table contiene add constraint chk_ejemplo
+check_no exits(
+select 1 
+from contiene
+group by cod_palabra, idioma
+having vount (*) > 5))
+
+create or replace function ejemplo_palabrfa () returns trigger as $body$
+begin if(exists( select 1 
+from contiene
+group by cod_palabra, idioma
+having vount (*) > 5)) then
+raise excepcion 'palabra en mas de 5 articulos'
+end if;
+return new;
+end;
