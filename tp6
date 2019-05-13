@@ -25,3 +25,26 @@ end;
 
 create trigger nombre
 after insert or update on contiene for each row execute procedure...;
+
+ejercicio 2.1
+CREATE DOMAIN  sueldoValido 
+sueldo_maximo numeric(7,2)
+CHECK (sueldo_maximo > sueldo_minimo);
+
+ejercicio 2.2
+alter table empleado add constraint cantidadEmpleados
+check not exists(
+select 1
+from empleado 
+group by id_departamento, id_distribuidor
+having count(id_empleado) > 70
+)
+ejercicio 2.3
+CREATE ASSERTION  JefesMismoDepartamento CHECK not exists(select *
+from empleado e join empleado j on(e.id_jefe = j.id_empleado)
+where e.id_departamento = j.id_departamento and e.id_distribuidor = j.id_distribuidor
+order by e.id_empleado
+limit 100);
+
+
+
