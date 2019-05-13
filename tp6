@@ -45,6 +45,13 @@ from empleado e join empleado j on(e.id_jefe = j.id_empleado)
 where e.id_departamento = j.id_departamento and e.id_distribuidor = j.id_distribuidor
 order by e.id_empleado
 limit 100);
+ejercicio 2.4
+CREATE ASSERTION IdiomasEntregas CHECK not exists(select 1
+from pelicula p join renglon_entrega re on (p.codigo_pelicula = re.codigo_pelicula)
+group by re.nro_entrega
+having count(distinct p.idioma) > 1
+limit 100
+)
 
 
 
