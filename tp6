@@ -52,6 +52,14 @@ group by re.nro_entrega
 having count(distinct p.idioma) > 1
 limit 100
 )
+ejercicio 2.5
+alter table empresa_productora add constraint cantidadEmpresasPorCiudadLol
+check not exists(
+select id_ciudad, count(codigo_productora)
+from empresa_productora
+group by id_ciudad
+having count(codigo_productora) > 10
+)
 
 
 
