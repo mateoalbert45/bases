@@ -73,5 +73,16 @@ ACLARACION (dou)
 cuando se hacen checks de fila o de un solo atributo se usa  el check( "condicion" ), y solo cuando es un check de tabla o assertion
 se usa el check not exists(consulta)
 ******
+ejercicio 2.7
+alter table distribuidor add constraint numTelefono
+check not exists(
+select *
+from distribuidor d
+where substring (d.telefono, 1, 3) =(select substring (d1.telefono, 1, 3) from nacional n, distribuidor d1
+where n.id_distribuidor = d.id_distribuidor
+and d1.id_distribuidor = n.id_distrib_mayorista
+limit 100
+)
+
 
 
