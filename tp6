@@ -53,13 +53,25 @@ having count(distinct p.idioma) > 1
 limit 100
 )
 ejercicio 2.5
-alter table empresa_productora add constraint cantidadEmpresasPorCiudadLol
-check not exists(
+alter table empresa_productora add constraint cantidadEmpresasPorCiudad
+check(
 select id_ciudad, count(codigo_productora)
 from empresa_productora
 group by id_ciudad
 having count(codigo_productora) > 10
 )
+ejercicio 2.6
+alter table pelicula add constraint 8mm
+check(
+(formato = '8mm' and idioma = 'Francés') or formato != '8mm'
+)
+esto es que si el formato es 8mm el idioma tiene que ser frances, y que si el formato no es asi da igual, o sea entra cualquier cosa
+:)
 
+******
+ACLARACION (dou)
+cuando se hacen checks de fila o de un solo atributo se usa  el check( "condicion" ), y solo cuando es un check de tabla o assertion
+se usa el check not exists(consulta)
+******
 
 
