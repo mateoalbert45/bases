@@ -1,0 +1,12 @@
+3)a)  alter table alquiler add constraint fechaAlquiler
+check(
+fecha_desde <= fecha_hasta)
+
+3)b)  CREATE ASSERTION  pesoMaximo CHECK not exists(select 1
+from pallet p join mov_entrada mv on(p.cod_pallet = mv.cod_pallet)
+     join alquiler_posiciones ap on (mv.id_alquiler = ap.id_alquiler)
+     join posicion pos on (ap.nro_posicion = pos.nro_posicion and ap.nro_estanteria = pos.nro_estanteria and ap.nro_fila = pos.nro_fila)
+     join fila f on(pos.nro_estanteria = f.nro_estanteria and pos.nro_fila)
+     group by p.cod_pallet
+     having sum(p.peso) > f.peso_max_kg)
+    
