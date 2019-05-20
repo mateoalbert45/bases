@@ -28,3 +28,22 @@ CREATE TRIGGER TR_1_fila_pesomax
 before insert or update nro_fila
 for each row
 execute procedure TRFN_1_pesomax
+ç
+
+CREATE FUNCTION TRFN_1_pesomax () RETURNS trigger as $body$
+BEGIN
+   
+   IF (select 1
+       from pallet p join mov_entrada mv on(p.cod_pallet = mv.cod_pallet)
+        join alquiler_posiciones ap on (mv.id_alquiler = ap.id_alquiler)
+        join posicion pos on (ap.nro_posicion = pos.nro_posicion and ap.nro_estanteria 
+      = pos.nro_estanteria and ap.nro_fila = pos.nro_fila)
+     join fila f on(pos.nro_estanteria = f.nro_estanteria and pos.nro_fila)
+     Where f.nro_estanteria = new.nro_estanteria and f.nro_fila = new.nro_fila
+     group by p.cod_pallet
+     having sum(p.peso) > f.peso_max_kg) THEN
+     RAISE EXCEPTION 'error de peso';
+  END IF;
+
+END;
+$body$ LANGUAGE 'plpgsql';
