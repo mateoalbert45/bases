@@ -83,6 +83,11 @@ where n.id_distribuidor = d.id_distribuidor
 and d1.id_distribuidor = n.id_distrib_mayorista
 limit 100
 )
+ejercicio 2.8
+alter table entrega add constraint fecha
+check(
+fecha_entrega >= CURRENT_DATE
+)
 
 
 
