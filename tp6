@@ -105,6 +105,15 @@ from voluntario v
 join voluntario v1 on(v.id_coordinador= v1.nro_voluntario)
 where v.horas_aportadas > v1.horas_aportadas)
 
+ejercicio 3.4
+alter table voluntario add constraint tareasIguales
+check not exists(
+select *1
+from voluntario v 
+join voluntario v1 on(v.id_coordinador= v1.nro_voluntario)
+where v.id_tarea != v1.id_tarea
+)
+
 
 
 
