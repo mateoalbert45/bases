@@ -104,6 +104,12 @@ select 1
 from voluntario v 
 join voluntario v1 on(v.id_coordinador= v1.nro_voluntario)
 where v.horas_aportadas > v1.horas_aportadas)
+ejercicio 3.3
+CREATE ASSERTION cantidadHorasValidas check not exists(
+select 1
+from voluntario v join tarea t on (v.id_tarea = t.id_tarea)
+where v.horas_aportadas > t.min_horas and v.horas_aportadas < t.max_horas
+limit 100);
 
 ejercicio 3.4
 alter table voluntario add constraint tareasIguales
@@ -113,6 +119,12 @@ from voluntario v
 join voluntario v1 on(v.id_coordinador= v1.nro_voluntario)
 where v.id_tarea != v1.id_tarea
 )
+ejercicio 3.5 no se si esta bien DOU.
+select nro_voluntario, count(id_institucion) as cambios
+from historico
+group by nro_voluntario, fecha_inicio
+having count(id_institucion) > 1 and extract(year from CURRENT_DATE) = extract(year from fecha_inicio)
+limit 100
 
 ejercicio 3.6
 alter table historico add constrant fechaValida
