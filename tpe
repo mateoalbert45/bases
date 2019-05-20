@@ -2,6 +2,20 @@
 check(
 fecha_desde <= fecha_hasta)
 
+
+CAMBIAR NOMBRE DE LOS CHECKS
+CAMBIAR NOMBRE DE LOS CHECKS
+CAMBIAR NOMBRE DE LOS CHECKSCAMBIAR NOMBRE DE LOS CHECKS
+CAMBIAR NOMBRE DE LOS CHECKS
+CAMBIAR NOMBRE DE LOS CHECKS
+
+CAMBIAR NOMBRE DE LOS CHECKS
+CAMBIAR NOMBRE DE LOS CHECKS
+CAMBIAR NOMBRE DE LOS CHECKS
+CAMBIAR NOMBRE DE LOS CHECKS
+CAMBIAR NOMBRE DE LOS CHECKS
+
+
 3)b)  CREATE ASSERTION  pesoMaximo CHECK not exists(select 1
 from pallet p join mov_entrada mv on(p.cod_pallet = mv.cod_pallet)
      join alquiler_posiciones ap on (mv.id_alquiler = ap.id_alquiler)
