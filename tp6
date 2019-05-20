@@ -114,6 +114,9 @@ join voluntario v1 on(v.id_coordinador= v1.nro_voluntario)
 where v.id_tarea != v1.id_tarea
 )
 
-
-
+ejercicio 3.6
+alter table historico add constrant fechaValida
+check(
+fecha_inicio < fecha_fin
+)
 
