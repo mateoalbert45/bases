@@ -89,5 +89,22 @@ check(
 fecha_entrega >= CURRENT_DATE
 )
 
+ejercicio 3.1
+CREATE DOMAIN menoresQue70
+fecha_nacimiento date
+CHECK( fecha_nacimiento > '01/01/1949');
+------ triggers---
+and v.nro_voluntario = new.nro_voluntario
+eso es para que solo chequee el voluntario nuevo que se va a insertar 
+------------------
+ejercicio 3.2
+alter table voluntario add constraint horasAportadas
+check not exists(
+select 1
+from voluntario v 
+join voluntario v1 on(v.id_coordinador= v1.nro_voluntario)
+where v.horas_aportadas > v1.horas_aportadas)
+
+
 
 
