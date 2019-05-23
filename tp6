@@ -131,4 +131,40 @@ alter table historico add constrant fechaValida
 check(
 fecha_inicio < fecha_fin
 )
+4.1
+alter table venta add constraint PorcentajeValido
+check(
+    descuento => 0 and descuento <= 100;
+    )
+4.4
+    create assertion prendasEnOferta check not exists(
+    select 1
+    from prenda p join venta v on (p.id_prenda = v.id_prenda)
+    where p.categoria = 'oferta' and v.descuento =! 0
+    )
+ejercicio 5
+5.1
+alter table provee add constraint MenosDe20 check not exists(
+    select 1
+    from provee
+    where count(cod_producto) > 20
+    group by nro_prov
+    )
+5.2
+alter table sucursal add constraint nombre check(
+    cod_suc LIKE 'S_%'
+    )
+5.3
+alter table producto add constraint nulidad check(
+    descripcion is not null and preentacion is not null or
+    descripcion is null and presentacion is not null or
+    descripcion is not null and presentacion is null
+    )
+5.4
+create assertion mismaCiudad check not exists(
+select p.nro_proveedor, p.localidad
+from proveedor p join provee pr on (p.nro_proveedor = pr.nro_proveedor)
+join sucursal s on (pr.cod_sucursal = s.cod_sucursal)
+where p.localidad != s.localidad
+)
 
