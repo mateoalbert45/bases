@@ -168,3 +168,51 @@ join sucursal s on (pr.cod_sucursal = s.cod_sucursal)
 where p.localidad != s.localidad
 )
 
+
+create function fn_ejemplo returns trigger ...
+begin
+if(exists(select 1
+from voluntario v 
+where v.id_institucion = new.id_institucion // esto es para que no checkee todas las id instituciones que ya estan en la base, que deberian estar bien xd
+group by v.id_institicuion
+having count(*) > 50)) then
+raise exception 'asd';
+end if
+return new; //con esto le decis a la base que no hubo error
+end;
+
+create trigger tr_ejemplo
+after insert or update of id_institucion
+on voluntario
+for each row
+execute procedure fn_ejemplo();
+
+----
+create assertion ejemplo_assertion
+check( not exists(
+select 1
+from voluntario v join institucion i on(v.id_institucion = i.id_institucion)
+where upper(i.nombre) like 'A%'
+group by v.id_institucion
+having count(*) > 50
+)
+el insert se checkearia solo en voluntario, porque si insertas una institucion que empiece con A daria igual, ya que no existe
+en la tabla voluntario al no tener voluntarios. si queres meterle voluntarios, ahi si se despertaria el trigger 
+
+create function fn_ejemplo returns trigger ...
+begin
+if(exists(select 1
+from voluntario v join institucion i on(v.id_institucion = i.id_institucion)
+where v.id_institucion = new.id_institucion // esto es para que no checkee todas las id instituciones que ya estan en la base, que deberian estar bien xd
+and i.nombre  like 'a%'
+group by v.id_institicuion
+having count(*) > 50)) then
+raise exception 'asd';
+end if
+return new; //con esto le decis a la base que no hubo error
+end;
+
+// analizar y pensar bien cuantas tablas se necesita en un trigger, porque usas recursos de mas y esta mal
+
+
+
