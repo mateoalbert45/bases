@@ -214,5 +214,31 @@ end;
 
 // analizar y pensar bien cuantas tablas se necesita en un trigger, porque usas recursos de mas y esta mal
 
+BEGIN
+	IF TG_OP = 'INSERT' THEN
+        DELETE from estadisticas where genero = new.genero 
+        INSERT into estadisticas(SELECT genero, COUNT(*) total_peliculas, count (distinct idioma) cantidad_idiomas FROM Pelicula 
+        where genero = new.genero
+GROUP BY genero);
+		RETURN NEW;
+	END IF;
+	IF TG_OP = 'UPDATE' THEN
+        DELETE from estadisticas where genero in (new.genero, old.genero); 
+        INSERT into estadisticas(SELECT genero, COUNT(*) total_peliculas, count (distinct idioma) cantidad_idiomas FROM Pelicula 
+        where genero in (new.genero, old.genero)
+        GROUP BY genero);
+
+		RETURN NEW;
+	END IF;
+	IF TG_OP = 'DELETE' THEN
+        DELETE from estadisticas where genero = old.genero 
+        INSERT into estadisticas(SELECT genero, COUNT(*) total_peliculas, count (distinct idioma) cantidad_idiomas FROM Pelicula 
+        where genero in (old.genero)
+
+		RETURN OLD;
+	END IF;
+END; 
+
+no entendi un pingo pero va a servir
 
 
