@@ -209,7 +209,7 @@ group by v.id_institicuion
 having count(*) > 50)) then
 raise exception 'asd';
 end if
-return new; //con esto le decis a la base que no hubo error
+return new; //con esto le decis a la base que no hubo error. si es delete tengo que retornar old 
 end;
 
 // analizar y pensar bien cuantas tablas se necesita en un trigger, porque usas recursos de mas y esta mal
