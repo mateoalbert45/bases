@@ -27,7 +27,7 @@ from pallet p join mov_entrada mv on(p.cod_pallet = mv.cod_pallet)
 CREATE TRIGGER TR_1_fila_pesomax
 before insert or update of nro_fila on fila
 for each row
-execute procedure TRFN_1_pesomax
+execute procedure TRFN_1_pesomax();
 ç
 
 CREATE FUNCTION TRFN_1_pesomax () RETURNS trigger as $body$
