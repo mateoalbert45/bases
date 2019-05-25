@@ -25,7 +25,7 @@ from pallet p join mov_entrada mv on(p.cod_pallet = mv.cod_pallet)
      having sum(p.peso) > f.peso_max_kg)
     
 CREATE TRIGGER TR_1_fila_pesomax
-before insert or update nro_fila
+before insert or update of nro_fila on fila
 for each row
 execute procedure TRFN_1_pesomax
 ç
