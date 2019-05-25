@@ -24,13 +24,13 @@ from pallet p join mov_entrada mv on(p.cod_pallet = mv.cod_pallet)
      group by p.cod_pallet
      having sum(p.peso) > f.peso_max_kg)
     
-CREATE TRIGGER TR_1_fila_pesomax
+CREATE TRIGGER TR_1_fila_pesomaximo
 before insert or update of nro_fila on fila
 for each row
-execute procedure TRFN_1_pesomax();
+execute procedure TRFN_1_pesomaximo();
 ç
 
-CREATE FUNCTION TRFN_1_pesomax () RETURNS trigger as $body$
+CREATE FUNCTION TRFN_1_pesomaximo () RETURNS trigger as $body$
 BEGIN
    
    IF (select 1
