@@ -54,3 +54,9 @@ AS varchar (40) NOT NULL
 CHECK (tipo IN ('general','vidrio','insecticidas','inflamable'));
 si lo pones directo en la consola de sql no anda, pero si lo pones seleccioanando la parte que dice  "restricciones" en la tabla si anda
 
+
+PREGUNTAR ESTO ROMPE TODO
+
+update mov_entrada
+set cod_pallet = 5
+where nro_fila = 1 and nro_posicion = 2
