@@ -47,3 +47,10 @@ BEGIN
 return new;
 END;
 $body$ LANGUAGE 'plpgsql';
+
+3)c)
+CREATE DOMAIN CK_1_posicion_TipoValido
+AS varchar (40) NOT NULL
+CHECK (tipo IN ('general','vidrio','insecticidas','inflamable'));
+si lo pones directo en la consola de sql no anda, pero si lo pones seleccioanando la parte que dice  "restricciones" en la tabla si anda
+
