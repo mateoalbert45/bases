@@ -67,3 +67,12 @@ AS SELECT ap.nro_posicion,ap.nro_estanteria,ap.nro_fila, a.fecha
       FROM alquiler_posiciones ap join alquiler a on (ap.id_alquiler = a.id_alquiler);
       where fecha_desde >='input' and fecha_hasta is null and estado is false
 
+
+EJERCICIO C)B)
+CREATE VIEW GR01_vencimiento_alquiler
+AS SELECT c.cuit_cuil,c.apellido,c.nombre,a.fecha_hasta
+      FROM cliente c join alquiler a on (c.cuit_cuil = a.id_cliente);
+   """"""(where extract (day from fecha_hasta) - select (extract (day fecha_actual)) <=  cantidad_elegida_usuario+)"""""""
+   PREGUNTAR SI PODEMOS USAR EL DATE DIFF PARA HACER LA DIFERENCIA DE DIAS ENTRE DOS FECHAS POR EJEMPLO:
+   DATE DIFF(FECHA_HASTA - FECHA_ACTUAL) <= 5 (ESTE 5 ES LA CANTIDAD DE DIAS QUE TIENE QUE AVISARTE ANTES DE QUE CADUQUE EL ALQUILER
+      
