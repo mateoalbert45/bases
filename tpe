@@ -60,3 +60,10 @@ PREGUNTAR ESTO ROMPE TODO
 update mov_entrada
 set cod_pallet = 5
 where nro_fila = 1 and nro_posicion = 2
+
+EJERCICIO C)A)
+CREATE VIEW GR01_fecha_de_posicion_libre
+AS SELECT ap.nro_posicion,ap.nro_estanteria,ap.nro_fila, a.fecha
+      FROM alquiler_posiciones ap join alquiler a on (ap.id_alquiler = a.id_alquiler);
+      where fecha_desde >='input' and fecha_hasta is null and estado is false
+
