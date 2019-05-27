@@ -302,3 +302,43 @@ CREATE TRIGGER CHK_ELIM_RENGLON
 AFTER DELETE ON renglon_entrega
 FOR EACH ROW EXECUTE PROCEDURE actualizar_hist();
 
+
+
+
+esto nos e que es----------------------------------------------------------
+[12:40, 27/5/2019] Caldo: CREATE OR REPLACE FUNCTION actualizar_hist() returns trigger as $$
+declare 
+	cant_reg_afectados integer;
+begin
+	GET DIAGNOSTICS cant_reg_afectados = ROW_COUNT;
+	insert into his_entrega (...., current_time,TG_OP,  cant_reg_afectados, current_user)
+	return new;
+end$$
+language plpgsql;
+[12:40, 27/5/2019] Caldo: CREATE TRIGGER CHK_NVO_RENGLON
+AFTER INSERT ON RENGLON_ENTREGA
+FOR EACH ROW EXECUTE PROCEDURE actualizar_hist();
+
+CREATE TRIGGER CHK_NVA_ENTREGA
+AFTER INSERT ON ENTREGA 
+FOR EACH ROW EXECUTE PROCEDURE actualizar_hist();
+
+CREATE TRIGGER CHK_CAMBIO_VIDEO_ENTREGA
+AFTER UPDATE id_video OF entrega
+FOR EACH ROW EXECUTE PROCEDURE actualizar_hist();
+
+CREATE TRIGGER CHK_CAMBIO_PELICULA_RENGLON
+AFTER UPDATE id_pelicula ON renglon_entrega
+FOR EACH ROW EXECUTE PROCEDURE actualizar_hist();
+
+CREATE TRIGGER CHK_CAMBIO_NRO_ENTREGA
+AFTER UPDATE nro_entrega ON renglon_entrega
+FOR EACH ROW EXECUTE PROCEDURE actualizar_hist();
+
+CREATE TRIGGER CHK_ELIM_ENTREGA
+AFTER DELETE ON entrega
+FOR EACH ROW EXECUTE PROCEDURE actualizar_hist();
+
+CREATE TRIGGER CHK_ELIM_RENGLON
+AFTER DELETE ON renglon_entrega
+FOR EACH ROW EXECUTE PROCEDURE actualizar_hist();
