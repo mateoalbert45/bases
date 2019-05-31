@@ -74,7 +74,9 @@ AS SELECT c.cuit_cuil,c.apellido,c.nombre,a.fecha_hasta
       FROM cliente c join alquiler a on (c.cuit_cuil = a.id_cliente);
    """"""(where extract (day from fecha_hasta) - select (extract (day fecha_actual)) <=  cantidad_elegida_usuario+)"""""""
    PREGUNTAR SI PODEMOS USAR EL DATE DIFF PARA HACER LA DIFERENCIA DE DIAS ENTRE DOS FECHAS POR EJEMPLO:
-   DATE DIFF(day, FECHA_HASTA - FECHA_ACTUAL) <= 5 (ESTE 5 ES LA CANTIDAD DE DIAS QUE TIENE QUE AVISARTE ANTES DE QUE CADUQUE EL ALQUILER
+   DATE_PART('day', FECHA_HASTA - FECHA_ACTUAL) <= 5 (ESTE 5 ES LA CANTIDAD DE DIAS QUE TIENE QUE AVISARTE ANTES DE QUE CADUQUE EL ALQUILER
       
 estos 2 de arriba estan mal, porque no se tienen que usar vistas ya que no son reusables. tenemos q usar procedimientos, y el 5 que pusimos tie
 que ser configurable, o sea, se le tiene q poder poner cualquier valor
+
+AGREGAR EL POS GLOBAL EN POSICION (CREO) CON UNIQUE
