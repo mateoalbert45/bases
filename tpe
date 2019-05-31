@@ -80,3 +80,14 @@ estos 2 de arriba estan mal, porque no se tienen que usar vistas ya que no son r
 que ser configurable, o sea, se le tiene q poder poner cualquier valor
 
 AGREGAR EL POS GLOBAL EN POSICION (CREO) CON UNIQUE
+
+D)1)
+select ap.nro_posicion , ap.nro_estanteria , ap.nro_fila, ap.estado, 
+CASE 
+WHEN ap.estado = true THEN date_diff('day', a.fecha_hasta - a.fecha_desde)
+END as dias
+
+from alquiler_posiciones ap 
+join alquiler a 
+on (ap.id_alquiler = a.id_alquiler)
+
