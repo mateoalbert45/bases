@@ -82,7 +82,7 @@ que ser configurable, o sea, se le tiene q poder poner cualquier valor
 AGREGAR EL POS GLOBAL EN POSICION (CREO) CON UNIQUE
 
 D)1)
-CREATE VIEW GR01_estado_posicion
+CREATE VIEW GR01_estado_posicion as
 select ap.nro_posicion , ap.nro_estanteria , ap.nro_fila, ap.estado, 
 CASE 
 WHEN ap.estado = true THEN DATE_PART('day', fecha_hasta) - DATE_PART('day', fecha_desde)
@@ -92,4 +92,14 @@ from alquiler_posiciones ap
 join alquiler a 
 on (ap.id_alquiler = a.id_alquiler)
 corregila matito :)
+
+D)2)
+CREATE VIEW GR01_clientes_mas_gastaron
+as
+select id_cliente, sum(importe_dia) as "cantidad gastada"
+from alquiler
+where fecha_desde <= NOW()
+and fecha_desde >= date('now') - interval '1 year'
+group by id_cliente
+limit 10
 
