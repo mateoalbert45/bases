@@ -64,8 +64,7 @@ where nro_fila = 1 and nro_posicion = 2
 EJERCICIO C)A)
 select * from ListaPosLibres('2018-03-07')//esto es para pr si la funcion anda douuuuuu
 
-
-CREATE OR REPLACE FUNCTION ListaPosLibres(fecha DATE) 
+CREATE OR REPLACE FUNCTION FN_01_ListaPosLibres(fecha DATE) 
  RETURNS TABLE ( nro_fila INT, nro_estanteria INT, nro_posicion INT)
 AS $$ 
 BEGIN
