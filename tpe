@@ -215,3 +215,14 @@ from GR01_alquiler_posiciones ap
 join GR01_alquiler a 
 on (ap.id_alquiler = a.id_alquiler)
 preguntar lo de estado
+
+CREATE OR REPLACE FUNCTION FN_01_ListaPosOcupadas(fecha DATE, id INT) 
+ RETURNS TABLE ( id_cliente INT, nro_estanteria INT, nro_posicion INT, nro_fila INT)
+AS $$ 
+BEGIN
+SELECT id_cliente, ap.nro_estanteria, ap.nro.posicion, ap.nro_fila
+      FROM  GR01_alquiler a join GR01_alquiler_posiciones ap on (a.id_alquiler = ap.id_alquiler)
+      where (fecha >= fecha_desde  and  fecha <= fecha_hasta) and id_cliente = id;
+END;
+$$ LANGUAGE plpgsql;
+punto E
