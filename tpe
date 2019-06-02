@@ -142,7 +142,7 @@ select id_cliente,
 CASE 
 WHEN fecha_hasta is null THEN extract(day from(NOW() - fecha_desde)) *importe_dia
 else extract(day from(NOW() - fecha_hasta)) *importe_dia 
-END as "dias restantes"
+END as cant_gastada
 from GR01_alquiler
 where fecha_desde <= NOW()
 and fecha_desde >= date('now') - interval '1 year'
