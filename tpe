@@ -122,11 +122,16 @@ on (ap.id_alquiler = a.id_alquiler)
 D)2)
 CREATE VIEW GR01_clientes_mas_gastaron
 as
-select id_cliente, sum(importe_dia) as "cantidad gastada"
+select id_cliente, sum(
+CASE 
+WHEN fecha_hasta is null THEN extract(day from(NOW() - fecha_desde))*(importe_dia)
+else (extract(day from(fecha_hasta)) - extract(day from(fecha_desde)))*(importe_dia)
+END ) as cantidad  
 from GR01_alquiler
 where fecha_desde <= NOW()
 and fecha_desde >= date('now') - interval '1 year'
 group by id_cliente
+order by cantidad ASC
 limit 10
 
 
