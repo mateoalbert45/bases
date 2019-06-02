@@ -176,3 +176,8 @@ $$ LANGUAGE plpgsql;
 //para cada num de posicion, entre a todos sus id alquiler y checkee la fecha. donde encuentre uno solo que esté dentro de esa fecha, no devuelve nada.
 ---
 anda mal pero intentamos cambiarlo
+
+CREATE DOMAIN CK_1_posicion_TipoValido
+AS varchar (40) NOT NULL
+CHECK (tipo IN ('general','vidrio','insecticidas','inflamable'));
+si lo pones directo en la consola de sql no anda, pero si lo pones seleccioanando la parte que dice  "restricciones" en la tabla si anda
