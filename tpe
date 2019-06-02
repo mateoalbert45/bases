@@ -137,3 +137,14 @@ CREATE TRIGGER tr_1_alquiler_posiciones_pesomaximo AFTER INSERT OR UPDATE OF nro
 CREATE TRIGGER tr_1_posicion_pesomaximo BEFORE INSERT OR UPDATE OF nro_fila, nro_estanteria ON unc_249407.GR01_posicion FOR EACH ROW EXECUTE PROCEDURE trfn_1_pesomaximo()	
 CREATE TRIGGER tr_1_fila_pesomaximo AFTER INSERT OR UPDATE OF nro_fila,nro_estanteria ON unc_249407.GR01_fila FOR EACH ROW EXECUTE PROCEDURE trfn_1_pesomaximo()
 
+preguntar
+select id_cliente,
+CASE 
+WHEN fecha_hasta is null THEN extract(day from(NOW() - fecha_desde)) *importe_dia
+else extract(day from(NOW() - fecha_hasta)) *importe_dia 
+END as "dias restantes"
+from GR01_alquiler
+where fecha_desde <= NOW()
+and fecha_desde >= date('now') - interval '1 year'
+group by id_cliente, fecha_hasta, fecha_desde, importe_dia
+limit 10
