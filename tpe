@@ -226,3 +226,19 @@ SELECT id_cliente, ap.nro_estanteria, ap.nro.posicion, ap.nro_fila
 END;
 $$ LANGUAGE plpgsql;
 punto E
+
+
+
+----
+esto es lo de mostrar las pos ocupadas que te pìde cuando implementas la pag
+CREATE OR REPLACE FUNCTION FN_01_ListaPosOcupadas(fecha DATE, id INT) 
+ RETURNS TABLE ( id_cliente INT, nro_estanteria INT, nro_posicion INT, nro_fila INT)
+AS $$ 
+BEGIN 
+RETURN QUERY  SELECT a.id_cliente, ap.nro_estanteria, ap.nro_posicion, ap.nro_fila
+      FROM  GR01_alquiler a join GR01_alquiler_posiciones ap on (a.id_alquiler = ap.id_alquiler)
+      where (fecha >= fecha_desde  and  fecha <= fecha_hasta) and a.id_cliente = id;
+END;
+$$ LANGUAGE plpgsql;
+
+
