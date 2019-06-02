@@ -135,7 +135,7 @@ limit 10
 ---
 los trigers estos
 
-CREATE TRIGGER tr_1_alquiler_posiciones_pesomaximo AFTER INSERT OR UPDATE OF nro_fila, nro_estanteria ON unc_249407.alquiler_posiciones FOR EACH ROW EXECUTE PROCEDURE trfn_1_pesomaximo()	
-CREATE TRIGGER tr_1_posicion_pesomaximo BEFORE INSERT OR UPDATE OF nro_fila, nro_estanteria ON unc_249407.posicion FOR EACH ROW EXECUTE PROCEDURE trfn_1_pesomaximo()	
-CREATE TRIGGER tr_1_fila_pesomaximo AFTER INSERT OR UPDATE OF nro_fila,nro_estanteria ON unc_249407.fila FOR EACH ROW EXECUTE PROCEDURE trfn_1_pesomaximo()
+CREATE TRIGGER tr_1_alquiler_posiciones_pesomaximo AFTER INSERT OR UPDATE OF nro_fila, nro_estanteria ON unc_249407.GR01_alquiler_posiciones FOR EACH ROW EXECUTE PROCEDURE trfn_1_pesomaximo()	
+CREATE TRIGGER tr_1_posicion_pesomaximo BEFORE INSERT OR UPDATE OF nro_fila, nro_estanteria ON unc_249407.GR01_posicion FOR EACH ROW EXECUTE PROCEDURE trfn_1_pesomaximo()	
+CREATE TRIGGER tr_1_fila_pesomaximo AFTER INSERT OR UPDATE OF nro_fila,nro_estanteria ON unc_249407.GR01_fila FOR EACH ROW EXECUTE PROCEDURE trfn_1_pesomaximo()
 
