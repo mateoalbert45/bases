@@ -70,8 +70,8 @@ CREATE OR REPLACE FUNCTION FN_01_ListaPosLibres(fecha DATE)
 AS $$ 
 BEGIN
  RETURN QUERY SELECT ap.nro_posicion,ap.nro_estanteria,ap.nro_fila
-      FROM  posicion p join alquiler_posiciones ap on(p.nro_posicion = ap.nro_posicion)
-            join alquiler a on (ap.id_alquiler = a.id_alquiler)
+      FROM  GR01_posicion p join GR01_alquiler_posiciones ap on(p.nro_posicion = ap.nro_posicion)
+            join GR01_alquiler a on (ap.id_alquiler = a.id_alquiler)
       where  not (fecha >= fecha_desde  and  fecha <= fecha_hasta);                                         
 END;
 $$ LANGUAGE plpgsql;
