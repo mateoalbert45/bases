@@ -1,3 +1,4 @@
+ required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
 3)a)  alter table alquiler add constraint fechaAlquiler
 check(
 fecha_desde <= fecha_hasta)
