@@ -241,4 +241,16 @@ RETURN QUERY  SELECT a.id_cliente, ap.nro_estanteria, ap.nro_posicion, ap.nro_fi
 END;
 $$ LANGUAGE plpgsql;
 
+create function fn_01_listaposlibres(fecha date) returns TABLE(nro_fila integer, nro_estanteria integer, nro_posicion integer, fecha_desde DATE, fecha_hasta DATE)
+    language plpgsql
+as
+$$
+BEGIN
+RETURN QUERY SELECT p.nro_posicion,p.nro_estanteria,p.nro_fila, a.fecha_desde, a.fecha_hasta
+      FROM  GR01_posicion p join GR01_alquiler_posiciones ap on(p.nro_posicion = ap.nro_posicion)
+            join GR01_alquiler a on (ap.id_alquiler = a.id_alquiler)
+      where p.nro_posicion not in (select ap1.nro_posicion from GR01_alquiler a1 join GR01_alquiler_posiciones ap1 on (a1.id_alquiler = ap1.id_alquiler) where fecha>= a.fecha_desde  and  fecha<= a.fecha_hasta ) and p.pos_global= 1;
+END;
+$$;
+
 
