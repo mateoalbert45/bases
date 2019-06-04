@@ -254,3 +254,18 @@ END;
 $$;
 
 
+correcioin de esta porongol
+
+CREATE VIEW GR01_clientes_mas_gastaron
+as
+select id_cliente, sum(
+CASE 
+WHEN fecha_hasta is null THEN (CURRENT_DATE - fecha_desde) * importe_dia
+else (fecha_hasta - fecha_desde) *importe_dia
+END ) as cantidad
+from GR01_alquiler
+where fecha_desde <= NOW()
+and fecha_desde >= date('now') - interval '1 year'    and fecha_desde >= date('now') - interval '1 year'
+group by id_cliente
+order by cantidad DESC
+limit 10
