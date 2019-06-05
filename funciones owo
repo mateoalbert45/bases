@@ -1,0 +1,60 @@
+create or replace function fn_01_listaposlibres(fecha date)
+    returns TABLE(nro_fila integer, nro_estanteria integer, nro_posicion integer, fecha_desde date, fecha_hasta date)
+    language plpgsql
+as
+$$
+BEGIN
+RETURN QUERY SELECT p.nro_posicion,p.nro_estanteria,p.nro_fila, a.fecha_desde, a.fecha_hasta
+      FROM  GR01_posicion p join GR01_alquiler_posiciones ap on(p.nro_posicion = ap.nro_posicion)
+            join GR01_alquiler a on (ap.id_alquiler = a.id_alquiler)
+      where p.nro_posicion not in (select ap1.nro_posicion from GR01_alquiler a1 join GR01_alquiler_posiciones ap1 on (a1.id_alquiler = ap1.id_alquiler) where fecha>= a.fecha_desde  and  fecha<= a.fecha_hasta ) and p.pos_global= 1;
+END;
+$$;
+
+create or replace function fn_01_listaposocupadas(fecha date, id integer)
+    returns TABLE(id_cliente integer, nro_estanteria integer, nro_posicion integer, nro_fila integer)
+    language plpgsql
+as
+$$
+BEGIN 
+RETURN QUERY  SELECT a.id_cliente, ap.nro_estanteria, ap.nro_posicion, ap.nro_fila
+      FROM  GR01_alquiler a join GR01_alquiler_posiciones ap on (a.id_alquiler = ap.id_alquiler)
+      where (fecha >= fecha_desde  and  fecha <= fecha_hasta) and a.id_cliente = id;
+END;
+$$;
+
+create or replace function fn_01_clientesvencimiento(dias integer)
+    returns TABLE(cuit_cuil integer, apellido character varying, nombre character varying, fecha_hasta date)
+    language plpgsql
+as
+$$
+BEGIN
+RETURN QUERY SELECT c.cuit_cuil,c.apellido,c.nombre,a.fecha_hasta
+      FROM gr01_cliente c join gr01_alquiler a on (c.cuit_cuil = a.id_cliente)
+   where DATE_PART('day', NOW() - a.fecha_hasta) <= dias;
+      END;
+$$;
+
+create or replace function trfn_1_pesomaximo() returns trigger
+    language plpgsql
+as
+$$
+BEGIN
+   
+   IF (select 1
+       from GR01_pallet p join GR01_mov_entrada mv on(p.cod_pallet = mv.cod_pallet)
+        join GR01_alquiler_posiciones ap on (mv.id_alquiler = ap.id_alquiler)
+        join GR01_posicion pos on (ap.nro_posicion = pos.nro_posicion and ap.nro_estanteria 
+      = pos.nro_estanteria and ap.nro_fila = pos.nro_fila)
+     join GR01_fila f on(pos.nro_estanteria = f.nro_estanteria and pos.nro_fila = f.nro_fila)
+     Where f.nro_estanteria = new.nro_estanteria and f.nro_fila = new.nro_fila
+     group by p.cod_pallet,f.peso_max_kg
+     having sum(p.peso) > f.peso_max_kg) THEN
+     RAISE EXCEPTION 'error de peso';
+  END IF;
+return new;
+END;
+$$;
+
+
+
