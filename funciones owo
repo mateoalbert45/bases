@@ -11,6 +11,7 @@ RETURN QUERY SELECT p.nro_posicion,p.nro_estanteria,p.nro_fila, a.fecha_desde, a
 END;
 $$;
 
+---
 
 create or replace function fn_01_listaposocupadas(fecha date, id integer)
     returns TABLE(id_cliente integer, nro_estanteria integer, nro_posicion integer, nro_fila integer)
@@ -20,10 +21,11 @@ $$
 BEGIN 
 RETURN QUERY  SELECT a.id_cliente, ap.nro_estanteria, ap.nro_posicion, ap.nro_fila
       FROM  GR01_alquiler a join GR01_alquiler_posiciones ap on (a.id_alquiler = ap.id_alquiler)
-      where (fecha >= fecha_desde  and  fecha <= fecha_hasta) and a.id_cliente = id;
+      where (fecha >= a.fecha_desde  and  fecha <= a.fecha_hasta or a.fecha_hasta is null) and a.id_cliente = id;
 END;
 $$;
 
+----
 create or replace function fn_01_clientesvencimiento(dias integer)
     returns TABLE(cuit_cuil integer, apellido character varying, nombre character varying, fecha_hasta date)
     language plpgsql
@@ -35,6 +37,9 @@ RETURN QUERY SELECT c.cuit_cuil,c.apellido,c.nombre,a.fecha_hasta
    where DATE_PART('day', NOW() - a.fecha_hasta) <= dias;
       END;
 $$;
+
+
+---
 
 create or replace function trfn_1_pesomaximo() returns trigger
     language plpgsql
