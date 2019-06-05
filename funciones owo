@@ -26,6 +26,8 @@ END;
 $$;
 
 ----
+
+
 create or replace function fn_01_clientesvencimiento(dias integer)
     returns TABLE(cuit_cuil integer, apellido character varying, nombre character varying, fecha_hasta date)
     language plpgsql
@@ -34,7 +36,7 @@ $$
 BEGIN
 RETURN QUERY SELECT c.cuit_cuil,c.apellido,c.nombre,a.fecha_hasta
       FROM gr01_cliente c join gr01_alquiler a on (c.cuit_cuil = a.id_cliente)
-   where DATE_PART('day', NOW() - a.fecha_hasta) <= dias;
+   where  (NOW() < a.fecha_hasta) and (DATE_PART('day', a.fecha_hasta - NOW()) < dias)
       END;
 $$;
 
