@@ -242,21 +242,17 @@ INSERT INTO gr01_posicion VALUES (1, 4, 1, 'general', 4);
 INSERT INTO gr01_posicion VALUES (2, 5, 1, 'insecticidas', 5);
 INSERT INTO gr01_posicion VALUES (7, 3, 1, 'vidrio', 6);
 
-
 INSERT INTO gr01_alquiler_posiciones VALUES (1, 1, 1, 1, true);
 INSERT INTO gr01_alquiler_posiciones VALUES (1, 4, 1, 1, true);
 INSERT INTO gr01_alquiler_posiciones VALUES (3, 1, 1, 1, true);
 INSERT INTO gr01_alquiler_posiciones VALUES (4, 4, 1, 1, true);
 INSERT INTO gr01_alquiler_posiciones VALUES (12, 2, 5, 1, true);
 
-
 INSERT INTO gr01_pallet VALUES ('1', 'estandar', 5.00);
 INSERT INTO gr01_pallet VALUES ('2', 'pesado', 200.00);
 INSERT INTO gr01_pallet VALUES ('3', '.', 5.00);
 INSERT INTO gr01_pallet VALUES ('4', '.', 3.00);
 INSERT INTO gr01_pallet VALUES ('5', '.', 15.00);
-
-
 
 INSERT INTO gr01_movimiento VALUES (1, '2019-06-09 00:00:00', 'matito', 'a');
 INSERT INTO gr01_movimiento VALUES (2, '2019-03-06 00:00:00', 'matito', 'a');
@@ -265,29 +261,11 @@ INSERT INTO gr01_movimiento VALUES (4, '2019-02-06 00:00:00', 'matito', 'c');
 INSERT INTO gr01_movimiento VALUES (5, '2019-02-06 00:00:00', 'matito', 'e');
 INSERT INTO gr01_movimiento VALUES (6, '2019-02-06 00:00:00', 'matito', 'f');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 INSERT INTO gr01_mov_entrada VALUES (1, 'oca', 'oca', '1', 1, 1, 1, 1);
 INSERT INTO gr01_mov_entrada VALUES (2, '.', '.', '3', 3, 1, 1, 1);
 INSERT INTO gr01_mov_entrada VALUES (3, '.', '.', '5', 12, 2, 5, 1);
 INSERT INTO gr01_mov_entrada VALUES (5, '.', '.', '4', 1, 4, 1, 1);
 INSERT INTO gr01_mov_entrada VALUES (4, '.', '.', '3', 3, 1, 1, 1);
-
-
-
 
 INSERT INTO gr01_mov_interno VALUES (1, 'a', 1, 1, 1, 1);
 INSERT INTO gr01_mov_interno VALUES (2, 'asd', 4, 1, 1, 2);
@@ -296,17 +274,8 @@ INSERT INTO gr01_mov_interno VALUES (4, 'asd', 7, 3, 1, 4);
 INSERT INTO gr01_mov_interno VALUES (5, 'asd', 2, 5, 1, 5);
 
 
-
-
 INSERT INTO gr01_mov_salida VALUES (1, '.', '.', 1);
 INSERT INTO gr01_mov_salida VALUES (2, '.', '.', 2);
 INSERT INTO gr01_mov_salida VALUES (3, 'd', 'd', 3);
 INSERT INTO gr01_mov_salida VALUES (4, 'd', 'd', 4);
 INSERT INTO gr01_mov_salida VALUES (5, 'd', 'd', 5);
-
-
-
-
-
-
-
