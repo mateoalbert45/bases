@@ -32,3 +32,17 @@ BEGIN
 END;
 $BODY$ 
 LANGUAGE plpgsql;	
+
+
+--Consulta que devuelva los datos de los empleados que sean jefes de los departamentos de distribuidoras que haya entregado mas de dos --peliculas entre los años 2005 y 2010 inclusive
+
+select e.id_empleado, e.id_jefe, d.id_distribuidor, d.id_departamento
+from empleado e join departamento d on (e.id_departamento = d.id_departamento)
+join distribuidor di on (d.id_distribuidor = di.id_distribuidor)
+join entrega en on (d.id_distribuidor = en.id_distribuidor)
+join renglon_entrega re on (en.nro_entrega = re.nro_entrega)
+where e.id_empleado = d.jefe_departamento
+and en.fecha_entrega between '01/01/2005' and '12/31/2010'
+group by e.id_empleado, d.id_departamento, d.id_distribuidor
+having count(distinct re.codigo_pelicula) > 2
+order by id_departamento
