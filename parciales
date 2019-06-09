@@ -46,3 +46,61 @@ and en.fecha_entrega between '01/01/2005' and '12/31/2010'
 group by e.id_empleado, d.id_departamento, d.id_distribuidor
 having count(distinct re.codigo_pelicula) > 2
 order by id_departamento
+
+
+
+-----
+
+
+CREATE VIEW GR01_clientes_mas_gastaron_vista_aparte
+as
+select 
+from GR01_clientes_mas_gastaron 
+where tipo_elemnto = 'M'
+
+
+
+aleter table desarrollador 
+add constrint ndhea_desarrolladorasovich
+check(salario is null and email is not null
+	or salario is not null and email is not null
+	or salario is not null and email is null
+
+
+create assertion ejer_3_fecha_cierre
+check not exists(select 1
+from problema prob join sub_prod sp
+	join producto prod
+where prob.fecha_cierre > prod.fecha_cierre
+)
+
+
+
+CREATE FUNCTION ej_5_fechaCierre () RETURNS trigger as $body$
+BEGIN
+   
+   IF exist ( select 1
+	from problema prob join producto prod
+	where prob.fecha_cierre > prod.fecha_cierre)
+	THEN
+     RAISE EXCEPTION 'error de fecha';
+  END IF;
+return new;
+END;
+$body$ LANGUAGE 'plpgsql';
+
+
+create trigger tr_ej_5_fechaCierre 
+after insert or update of problema on fecha_cierre
+for each row
+execute procedure ej_5_fechaCierre ();
+
+select * from desarrollador D
+where NOT exists(
+                                 select *
+                                 from desarrollador d1 join problema p on (d1.id_equipo = p.id_equ_reporta
+				 and d1.id_equipo = p.id_equ_a_cargo
+				 and d1.id_desar = p.id_des_a_reporta
+				 and d1.id_desar = p.id_des_a_cargo)
+                              
+                                 )
