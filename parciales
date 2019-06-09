@@ -1,0 +1,34 @@
+-- EJERCICIO 8 Realice un procedimiento que al ejecutarse borre los datos de la tabla ReporteProblemas (si hubieran) 
+--y la complete con los productos no cerrados conjuntamente con los problemas no resueltos (fechas de cierre nulas) 
+create table ReporteProblemas (
+id_producto varchar(5),
+descripcion_producto varchar(80), 
+id_problema int, 
+descripcion_problema varchar(80),
+fecha_reporte timestamp );
+
+CREATE OR REPLACE FUNCTION completar_reporteproblema() 
+RETURNS integer AS 
+$BODY$
+DECLARE
+	mi_consulta RECORD;
+BEGIN
+	DELETE FROM REPORTEPROBLEMA;
+	FOR mi_consulta IN SELECT O.id_producto, O.descripcion AS descripcion_producto, P.id_problema, P.descripcion, fecha_reporte
+						FROM PROBLEMA P JOIN PRODUCTO O ON (P.id_producto = O.id_producto)
+						WHERE P.fecha_cierre is null 
+						OR O.fecha_cierre IS NULL 
+		LOOP
+		INSERT INTO REPORTEPROBLEMA VALUES (
+				mi_consulta.id_producto, 
+				mi_consulta.descripcion_producto, 
+				mi_consulta.id_problema, 
+				mi_consulta.descripcion, 
+				mi_consulta.fecha_reporte);				
+		
+
+    END LOOP;
+	RETURN 1;
+END;
+$BODY$ 
+LANGUAGE plpgsql;	
