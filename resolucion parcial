@@ -1,0 +1,31 @@
+
+los inserts q dieron de ejemplo para este ejercicio son todos con id 1 
+1) update match simple - aceptado: se aceptan los update de ambas null, y cuando una es null la otra puede o no contener el mismo valor que algun valor en el campo referenciado
+update posicion set nro_estanteria = 25, nro_fila = null where posicion pos_global = 1;
+update posicion set nro_estanteria = null, nro_fila = null where posicion pos_global = 1;
+update posicion set nro_estanteria = null, nro_fila = 8 where posicion pos_global = 1;
+
+update match simple - rechazado: si ninguno de los campos de la FK es null, deben ambas contener los valores referenciados, de lo contrario no hace matching y la operacion la rechaza
+update posicion set nro_estanteria = 25, nro_fila = 5 where posicion pos_global = 1; tira error xq el 25 y el 5 no existen en la tabla q referencia
+
+update match full aceptado: para que el match full sea aceptado ambas deben ser null o ambas deben hacer referencia a algo
+update posicion set nro_estanteria = null, nro_fila = null where posicion pos_global = 1;
+update posicion set nro_estanteria = 1, nro_fila = 1 where posicion pos_global = 1;
+
+update match full rechazado
+update posicion set nro_estanteria = 1, nro_fila = null where posicion pos_global = 1;
+2)
+alter table alquiler_posiciones add constraint ck_cantidad_alquileres 
+check not exists(
+select id_alquiler
+from alquiler_posiciones
+group by id_alquiler
+having count(nro_posicion) > 10);
+
+esto en el declarativo de sql esta bien, pero si te piden implementarlo en postgre esta mal porque no se pueden poner selects adentro de un
+check (me acabo de enterar XD). en este caso tenes que usar un trigger, o sea, pasar este check a trigger.
+basicamente las assertions y los checks de tablas son triggers
+
+
+
+
