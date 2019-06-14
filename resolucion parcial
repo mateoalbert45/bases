@@ -57,6 +57,16 @@ where a.fecha_desde >= (date('now') - interval '130 days')
 group by p.nro_posicion,p.nro_estanteria, p.nro_fila
 order by cantidad_alquileres DESC
 limit 1
+7) CREATE VIEW alquileres_con_mas_movimientos AS
+select a.id_alquiler, count(distinct id_movimiento_entrada) as cantidad_movimientos
+from alquiler a join alquiler_posiciones ap on ( a.id_alquiler = ap.id_alquiler)
+join mov_entrada m on (ap.id_alquiler = m.id_alquiler and ap.nro_posicion = m.nro_posicion and ap.nro_estanteria = m.nro_estanteria and ap.nro_fila = m.nro_fila)
+where a.fecha_desde >= (date('now') - interval '180 days')
+group by a.id_alquiler
+order by cantidad_movimientos DESC
+limit 5
+8) para update no corre, ya que en la tabla mov entrada siempre que hayan referencias de id entre 1000 y 2000 no va a dejarlo andar
+en delete si porque es todo cascada
 
 
 
