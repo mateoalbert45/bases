@@ -1,6 +1,10 @@
+1)Dado el esquema parcial del TPE  modificado (imagen y script adjuntos), de un ejemplo para UPDATE donde sean aceptadas y rechazadas las operaciones tanto utilizando MATCH SIMPLE como MATCH FULL  
+
+Coloque los inserts y/o updates (según corresponda). 
+Explique para cada operación de actualización porque procede o porque no y si procede cómo quedan la/s tabla/s afecta/s.
 
 los inserts q dieron de ejemplo para este ejercicio son todos con id 1 
-1) update match simple - aceptado: se aceptan los update de ambas null, y cuando una es null la otra puede o no contener el mismo valor que algun valor en el campo referenciado
+update match simple - aceptado: se aceptan los update de ambas null, y cuando una es null la otra puede o no contener el mismo valor que algun valor en el campo referenciado
 update posicion set nro_estanteria = 25, nro_fila = null where posicion pos_global = 1;
 update posicion set nro_estanteria = null, nro_fila = null where posicion pos_global = 1;
 update posicion set nro_estanteria = null, nro_fila = 8 where posicion pos_global = 1;
@@ -14,7 +18,8 @@ update posicion set nro_estanteria = 1, nro_fila = 1 where posicion pos_global =
 
 update match full rechazado
 update posicion set nro_estanteria = 1, nro_fila = null where posicion pos_global = 1;
-2)
+2) Utilizando el esquema del trabajo especial 2019 (el original sin modificaciones).
+Plantee el recurso declarativo mas adecuado que controle que cada alquiler no tenga más de 10 posiciones alquiladas
 alter table alquiler_posiciones add constraint ck_cantidad_alquileres 
 check not exists(
 select id_alquiler
@@ -22,9 +27,38 @@ from alquiler_posiciones
 group by id_alquiler
 having count(nro_posicion) > 10);
 
+3)Indique si la restricción anterior no es soportada por PostgreSQL. De no serlo implementela utilizando los recursos mas adecuados del DBMS.
 esto en el declarativo de sql esta bien, pero si te piden implementarlo en postgre esta mal porque no se pueden poner selects adentro de un
 check (me acabo de enterar XD). en este caso tenes que usar un trigger, o sea, pasar este check a trigger.
 basicamente las assertions y los checks de tablas son triggers
+
+4) Plantee el recurso declarativo mas adecuado que controle que no exista mas de un movimiento de entrada para un pallet.
+
+esto nosotros lo hicimos bien, haciendolo igual que el otro. pero dijo viviana que la manera mas facil es cambiando la id pallet
+metiendole un constraint de unique xd
+alter table mov_entrada add constraint ck_cantidad_movimientos 
+check not exists(
+select cod_pallet
+from mov_entrada
+group by cod_pallet
+having count(id_movimiento_entrada) > 1)
+asi lo hice yo y esta bien igual u.u
+
+esto seria asi
+alter table mov_entrada add constraint posiciones_alquiladas
+UNIQUE(cod_pallet);
+
+5) igual que en el anterior hay q pasarlo a trigger
+6) CREATE VIEW posicion_mas_alquilada as
+select p.nro_posicion, p.nro_estanteria, p.nro_fila, p.tipo, count(distinct ap.id_alquiler) as cantidad_alquileres
+from posicion p join alquiler_posiciones ap on (p.nro_posicion = ap.nro_posicion and p.nro_estanteria = ap.nro_estanteria and p.nro_fila = ap.nro_fila)
+join alquiler a on (ap.id_alquiler = a.id_alquiler)
+where a.fecha_desde >= (date('now') - interval '130 days') 
+group by p.nro_posicion,p.nro_estanteria, p.nro_fila
+order by cantidad_alquileres DESC
+limit 1
+
+
 
 
 
