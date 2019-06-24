@@ -281,3 +281,18 @@ BEGIN
  
 END;
 $BODY$ LANGUAGE 'plpgsql';
+-----
+esto es lo de cant voluntarios tp 6 ej 5 ( de la parte b creo)
+CREATE OR REPLACE FUNCTION PRUEBA()
+RETURNS TRIGGER AS $BODY$
+BEGIN
+
+        DROP TABLE estadisticas;
+        CREATE TABLE estadisticas AS
+            SELECT tarea, mes, count(id) as cant_voluntarios 
+            FROM hola
+            GROUP BY tarea,mes;
+    RETURN NEW;
+ 
+END;
+$BODY$ LANGUAGE 'plpgsql';
