@@ -269,3 +269,15 @@ and fecha_desde >= date('now') - interval '1 year'    and fecha_desde >= date('n
 group by id_cliente
 order by cantidad DESC
 limit 10
+
+
+----- cosas que estuve practicando xd
+CREATE OR REPLACE FUNCTION PRUEBA()
+RETURNS TRIGGER AS $BODY$
+BEGIN
+
+     UPDATE estadisticas set nombre = NEW.nombre where nombre = OLD.nombre; 
+    RETURN NEW;
+ 
+END;
+$BODY$ LANGUAGE 'plpgsql';
