@@ -34,3 +34,19 @@ no incluye subconsultas en el SELECT
 with check option
 Si se especifica WCO: la condición del WHERE debe evaluar verdadero para que la tupla sea insertada/modificada 
 se rechaza cualquier inserción o actualización que haga migrar una tupla de la vista (porque la tupla ya no satisfaría la condición del query que define la vista)
+
+
+
+Si se modifican los datos de una vista, se modifica la tabla base.
+
+Se puede insertar, actualizar o eliminar datos de una tabla a través de una vista, teniendo en cuenta lo siguiente, las modificaciones que se realizan a las vistas:
+
+- no pueden afectar a más de una tabla consultada. Pueden modificarse datos de una vista que combina varias tablas pero la modificación solamente debe afectar a una sola tabla.
+
+- no se pueden cambiar los campos resultado de un cálculo.
+
+- pueden generar errores si afectan a campos a las que la vista no hace referencia. Por ejemplo, si se ingresa un registro en una vista que consulta una tabla que tiene campos not null que no están incluidos en la vista.
+
+- la opción "with check option" obliga a todas las instrucciones de modificación que se ejecutan en la vista a cumplir ciertos criterios que se especifican al definir la vista.
+
+- para eliminar datos de una vista solamente UNA tabla puede ser listada en el "from" de la definicion de la misma.
