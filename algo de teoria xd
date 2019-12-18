@@ -1,0 +1,36 @@
+DROP TABLE nombre_tabla [CASCADE | RESTRICT]
+ 
+→ Se elimina la definición de la tabla y todas las filas que contiene
+ Si es RESTRICT, se rechaza si hay objetos definidos a partir de la tabla     
+  (es la opción por defecto)
+
+
+ Si es CASCADE, se eliminan todos los objetos dependientes de la tabla 
+  (también los objetos que dependan a su vez de ellos)
+
+Qué sucede si se intenta borrar (delete) un registro en la Tabla_B que está siendo  referenciada en la Tabla_A por la FK?
+Opciones 1 - Rechazo de la operación 
+NO ACTION y RESTRICT:  no permite borrar un registro cuya clave primaria está siendo referenciada por un registro en la Tabla_A (no action es la opción por defecto) 
+Opciones 2 - Acepta la operación y realiza acciones reparadoras adicionales
+borra el registro en la Tabla_B y
+CASCADE: se propaga el borrado a todos los registros que referencian a dicha clave primaria mediante la FK en la Tabla_A
+SET NULL: les coloca nulos en la FK de los registros que referencian a dicha clave primaria en la Tabla_A (sólo si admite nulos)
+SET DEFAULT: les coloca el valor por defecto en la FK de los registros que referencian a dicha clave primaria en la Tabla_A
+
+Los tipos de matching afectan cuando las FK se definen sobre varios atributos, y pueden contener valores nulos
+Indican los requisitos que deben cumplir los conjuntos de valores de atributos de la FK en R, respecto de los correspondientes en la clave referenciada en R´
+
+FULL: No permite que una columna tenga el valor NULL en una clave foránea compuesta por varias columnas
+SIMPLE: Permite que una columna tenga el valor NULL en una clave foránea compuesta por varias columnas
+count(*) trae todos los nulos
+
+
+vista actualizable
+conserva todas las columnas de la clave primaria 
+no contiene funciones de agregación o información derivada
+no incluye la claúsula DISTINCT
+no incluye subconsultas en el SELECT
+
+with check option
+Si se especifica WCO: la condición del WHERE debe evaluar verdadero para que la tupla sea insertada/modificada 
+se rechaza cualquier inserción o actualización que haga migrar una tupla de la vista (porque la tupla ya no satisfaría la condición del query que define la vista)
