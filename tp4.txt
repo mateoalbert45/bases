@@ -119,4 +119,16 @@ ALTER TABLE distribuidornac
 ;
 
 
+--Consulta que devuelva los datos de los empleados que sean jefes de los departamentos de distribuidoras que haya entregado mas de dos 
+--peliculas entre los años 2005 y 2010 inclusive
 
+select *
+from empleado emp 
+where id_empleado in(select jefe_departamento 
+						from departamento departamento
+							join distribuidor dist on(dist.id_distribuidor = depto.id_distribuidor)
+							where(extract(year from fecha_entrega) >= 2005)and
+							(extract(year from fecha_entrega) <= 2010)
+							group by entr.id_distribuidor
+							having count(entr.id_distribuidor) > 2
+							limit 100);
