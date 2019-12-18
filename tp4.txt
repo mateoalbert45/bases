@@ -132,3 +132,22 @@ where id_empleado in(select jefe_departamento
 							group by entr.id_distribuidor
 							having count(entr.id_distribuidor) > 2
 							limit 100);
+
+-- EJERCICIO 6 Escriba una consulta SELECT que permita resolver la siguiente consulta
+-- Obtener todos los datos de los desarrolladores que no han reportado ni que han estado a cargo de problemas
+
+SELECT *
+FROM desarrollador
+WHERE (id_equipo, id_desar) NOT IN
+	SELECT (id_equ_reporta, id_des_reporta) FROM problema AND 
+	SELECT (id_equipo, id_desar) FROM desarrollador NOT IN 
+	SELECT (id_equ_a_cargo, id_des_a_cargo) FROM problema;
+
+-- EJERCICIO 7 Escriba una consulta SELECT que permita resolver la siguiente consulta
+-- Listar los Desarrolladores ociosos en la última semana, es decir aquellos que no han sido asignados a ningún problema
+-- de ningún producto en la última semana.
+SELECT *
+FROM desarrollador
+WHERE (id_equipo, id_desar) NOT IN 
+SELECT (id_equ_reporta, id_des_reporta) FROM problema p
+WHERE (p.fecha_reporte) < (current_date -7);
