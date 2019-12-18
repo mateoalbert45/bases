@@ -151,3 +151,13 @@ FROM desarrollador
 WHERE (id_equipo, id_desar) NOT IN 
 SELECT (id_equ_reporta, id_des_reporta) FROM problema p
 WHERE (p.fecha_reporte) < (current_date -7);
+
+
+--Lista el nombre y apellido de todos los voluntarios que realizaron tareas cuyo identificador comienzan con 'AD'
+
+SELECT nombre, apellido
+FROM voluntario v
+WHERE nro_voluntario IN
+(SELECT nro_voluntario
+FROM historico h JOIN tarea t ON ( h.id_tarea = t.id_tarea)
+WHERE t.id_tarea like 'AD%' );
