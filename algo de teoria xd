@@ -50,3 +50,6 @@ Se puede insertar, actualizar o eliminar datos de una tabla a través de una vis
 - la opción "with check option" obliga a todas las instrucciones de modificación que se ejecutan en la vista a cumplir ciertos criterios que se especifican al definir la vista.
 
 - para eliminar datos de una vista solamente UNA tabla puede ser listada en el "from" de la definicion de la misma.
+
+
+ REFERENCES reftable [ ( refcolumn ) ] [ MATCH FULL | MATCH PARTIAL | MATCH SIMPLE ] para crear la tabla con el tipo de match q quieras xd
