@@ -53,3 +53,6 @@ Se puede insertar, actualizar o eliminar datos de una tabla a través de una vis
 
 
  REFERENCES reftable [ ( refcolumn ) ] [ MATCH FULL | MATCH PARTIAL | MATCH SIMPLE ] para crear la tabla con el tipo de match q quieras xd
+CREATE TABLE t_full ( a int, b int,
+  FOREIGN KEY (a,b) REFERENCES foo MATCH FULL
+);
